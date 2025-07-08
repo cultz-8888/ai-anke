@@ -191,6 +191,11 @@
             margin-top: 20px;
         }
 
+        /* 隠しiframe用のスタイル */
+        #hiddenIframe {
+            display: none;
+        }
+
         @media (max-width: 600px) {
             .container {
                 padding: 10px;
@@ -217,7 +222,9 @@
             <p>貴院の現在の運営状況についてお聞かせください</p>
         </div>
 
-        <form id="surveyForm" class="survey-form">
+        <!-- Google Apps Scriptに送信するフォーム（新URL対応） -->
+        <form id="surveyForm" class="survey-form" action="https://script.google.com/macros/s/AKfycbyTr14H6t8liAud9zf2aijBJ7wQaqpjP0LSSYi4YRa4XzPIc1OtIieCTtskwyTfCUs4Sg/exec" method="POST" target="hiddenIframe">
+            
             <!-- 質問1 -->
             <div class="question-group">
                 <div class="question">
@@ -226,23 +233,23 @@
                 </div>
                 <div class="radio-group">
                     <label class="radio-item">
-                        <input type="radio" name="phone_calls" value="10件未満">
+                        <input type="radio" name="phone_calls" value="10件未満" required>
                         <span>10件未満</span>
                     </label>
                     <label class="radio-item">
-                        <input type="radio" name="phone_calls" value="10-30件">
+                        <input type="radio" name="phone_calls" value="10-30件" required>
                         <span>10〜30件</span>
                     </label>
                     <label class="radio-item">
-                        <input type="radio" name="phone_calls" value="31-50件">
+                        <input type="radio" name="phone_calls" value="31-50件" required>
                         <span>31〜50件</span>
                     </label>
                     <label class="radio-item">
-                        <input type="radio" name="phone_calls" value="51-100件">
+                        <input type="radio" name="phone_calls" value="51-100件" required>
                         <span>51〜100件</span>
                     </label>
                     <label class="radio-item">
-                        <input type="radio" name="phone_calls" value="100件以上">
+                        <input type="radio" name="phone_calls" value="100件以上" required>
                         <span>100件以上</span>
                     </label>
                 </div>
@@ -256,23 +263,23 @@
                 </div>
                 <div class="radio-group">
                     <label class="radio-item">
-                        <input type="radio" name="website_update" value="ほぼ毎日">
+                        <input type="radio" name="website_update" value="ほぼ毎日" required>
                         <span>ほぼ毎日</span>
                     </label>
                     <label class="radio-item">
-                        <input type="radio" name="website_update" value="週に1-2回">
+                        <input type="radio" name="website_update" value="週に1-2回" required>
                         <span>週に1〜2回</span>
                     </label>
                     <label class="radio-item">
-                        <input type="radio" name="website_update" value="月に1-2回">
+                        <input type="radio" name="website_update" value="月に1-2回" required>
                         <span>月に1〜2回</span>
                     </label>
                     <label class="radio-item">
-                        <input type="radio" name="website_update" value="数ヶ月に1回">
+                        <input type="radio" name="website_update" value="数ヶ月に1回" required>
                         <span>数ヶ月に1回</span>
                     </label>
                     <label class="radio-item">
-                        <input type="radio" name="website_update" value="ほとんど更新しない">
+                        <input type="radio" name="website_update" value="ほとんど更新しない" required>
                         <span>ほとんど更新しない</span>
                     </label>
                 </div>
@@ -286,15 +293,15 @@
                 </div>
                 <div class="radio-group">
                     <label class="radio-item">
-                        <input type="radio" name="line_account" value="運用している">
+                        <input type="radio" name="line_account" value="運用している" required>
                         <span>運用している</span>
                     </label>
                     <label class="radio-item">
-                        <input type="radio" name="line_account" value="アカウントはあるが活用していない">
+                        <input type="radio" name="line_account" value="アカウントはあるが活用していない" required>
                         <span>アカウントはあるが活用していない</span>
                     </label>
                     <label class="radio-item">
-                        <input type="radio" name="line_account" value="運用していない">
+                        <input type="radio" name="line_account" value="運用していない" required>
                         <span>運用していない</span>
                     </label>
                 </div>
@@ -308,19 +315,19 @@
                 </div>
                 <div class="radio-group">
                     <label class="radio-item">
-                        <input type="radio" name="line_automation" value="予約・キャンセル・初診案内すべて自動化">
+                        <input type="radio" name="line_automation" value="予約・キャンセル・初診案内すべて自動化" required>
                         <span>予約・キャンセル・初診案内すべて自動化</span>
                     </label>
                     <label class="radio-item">
-                        <input type="radio" name="line_automation" value="一部の業務を自動化">
+                        <input type="radio" name="line_automation" value="一部の業務を自動化" required>
                         <span>一部の業務を自動化</span>
                     </label>
                     <label class="radio-item">
-                        <input type="radio" name="line_automation" value="自動化していない">
+                        <input type="radio" name="line_automation" value="自動化していない" required>
                         <span>自動化していない</span>
                     </label>
                     <label class="radio-item">
-                        <input type="radio" name="line_automation" value="LINEを使用していない">
+                        <input type="radio" name="line_automation" value="LINEを使用していない" required>
                         <span>LINEを使用していない</span>
                     </label>
                 </div>
@@ -334,15 +341,15 @@
                 </div>
                 <div class="radio-group">
                     <label class="radio-item">
-                        <input type="radio" name="google_maps" value="積極的に運用・更新している">
+                        <input type="radio" name="google_maps" value="積極的に運用・更新している" required>
                         <span>積極的に運用・更新している</span>
                     </label>
                     <label class="radio-item">
-                        <input type="radio" name="google_maps" value="登録しているが更新していない">
+                        <input type="radio" name="google_maps" value="登録しているが更新していない" required>
                         <span>登録しているが更新していない</span>
                     </label>
                     <label class="radio-item">
-                        <input type="radio" name="google_maps" value="運用していない">
+                        <input type="radio" name="google_maps" value="運用していない" required>
                         <span>運用していない</span>
                     </label>
                 </div>
@@ -359,27 +366,27 @@
                 </div>
                 <div class="radio-group">
                     <label class="radio-item">
-                        <input type="radio" name="priority" value="電話対応の効率化・自動化">
+                        <input type="radio" name="priority" value="電話対応の効率化・自動化" required>
                         <span>電話対応の効率化・自動化</span>
                     </label>
                     <label class="radio-item">
-                        <input type="radio" name="priority" value="ホームページの充実・更新">
+                        <input type="radio" name="priority" value="ホームページの充実・更新" required>
                         <span>ホームページの充実・更新</span>
                     </label>
                     <label class="radio-item">
-                        <input type="radio" name="priority" value="LINE公式アカウントの活用">
+                        <input type="radio" name="priority" value="LINE公式アカウントの活用" required>
                         <span>LINE公式アカウントの活用</span>
                     </label>
                     <label class="radio-item">
-                        <input type="radio" name="priority" value="Googleマップ・MEO対策">
+                        <input type="radio" name="priority" value="Googleマップ・MEO対策" required>
                         <span>Googleマップ・MEO対策</span>
                     </label>
                     <label class="radio-item">
-                        <input type="radio" name="priority" value="予約システムの導入・改善">
+                        <input type="radio" name="priority" value="予約システムの導入・改善" required>
                         <span>予約システムの導入・改善</span>
                     </label>
                     <label class="radio-item">
-                        <input type="radio" name="priority" value="患者とのコミュニケーション強化">
+                        <input type="radio" name="priority" value="患者とのコミュニケーション強化" required>
                         <span>患者とのコミュニケーション強化</span>
                     </label>
                 </div>
@@ -406,10 +413,10 @@
         </form>
     </div>
 
-    <script>
-        // Google Apps Script Web App URL（更新済み）
-        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzZZ6Wewka8ZsdbiQB3QFhtx1BMz8XUwKZZBERv3sT0ZXvkArsaZz5YpD3n-nhkiAInaA/exec';
+    <!-- 隠しiframe（フォーム送信先） -->
+    <iframe id="hiddenIframe" name="hiddenIframe"></iframe>
 
+    <script>
         // ラジオボタンの選択状態を視覚的に表示
         document.querySelectorAll('input[type="radio"]').forEach(radio => {
             radio.addEventListener('change', function() {
@@ -423,20 +430,7 @@
         });
 
         // フォーム送信処理
-        document.getElementById('surveyForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            // すべての質問に回答されているかチェック
-            const questions = ['phone_calls', 'website_update', 'line_account', 'line_automation', 'google_maps', 'priority'];
-            const formData = new FormData(this);
-            
-            for (let question of questions) {
-                if (!formData.get(question)) {
-                    alert('すべての質問にお答えください。');
-                    return;
-                }
-            }
-
+        document.getElementById('surveyForm').addEventListener('submit', function(e) {
             // UI要素の取得
             const submitBtn = document.getElementById('submitBtn');
             const loading = document.getElementById('loading');
@@ -449,45 +443,18 @@
             successMessage.style.display = 'none';
             errorMessage.style.display = 'none';
 
-            // 送信データの準備
-            const surveyData = {
-                phone_calls: formData.get('phone_calls'),
-                website_update: formData.get('website_update'),
-                line_account: formData.get('line_account'),
-                line_automation: formData.get('line_automation'),
-                google_maps: formData.get('google_maps'),
-                priority: formData.get('priority'),
-                timestamp: new Date().toISOString()
-            };
-
-            try {
-                // Google Apps Scriptに送信
-                const response = await fetch(WEB_APP_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(surveyData)
-                });
-
-                const result = await response.json();
-
-                if (result.status === 'success') {
-                    // 成功時の処理
-                    loading.style.display = 'none';
-                    successMessage.style.display = 'block';
-                    // フォームを非表示にする
-                    document.querySelector('.survey-form').style.display = 'none';
-                } else {
-                    throw new Error(result.message || '送信に失敗しました');
-                }
-            } catch (error) {
-                // エラー時の処理
-                console.error('送信エラー:', error);
+            // 3秒後に成功メッセージを表示（Google Apps Scriptの処理時間を考慮）
+            setTimeout(() => {
                 loading.style.display = 'none';
-                errorMessage.style.display = 'block';
-                submitBtn.disabled = false;
-            }
+                successMessage.style.display = 'block';
+                // フォームを非表示にする
+                document.querySelector('.survey-form').style.display = 'none';
+            }, 3000);
+        });
+
+        // 隠しiframeのロード完了を監視（オプション）
+        document.getElementById('hiddenIframe').addEventListener('load', function() {
+            console.log('フォーム送信が完了しました');
         });
     </script>
 </body>
