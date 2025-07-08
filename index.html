@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>医療機関のデジタル化現状調査アンケート</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .survey-form {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .question-group {
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .question-group:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .question {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #444;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .question-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .radio-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border: 2px solid #f0f0f0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .radio-item:hover {
+            border-color: #667eea;
+            background-color: #f8f9ff;
+        }
+
+        .radio-item input[type="radio"] {
+            margin-right: 12px;
+            transform: scale(1.2);
+        }
+
+        .radio-item.selected {
+            border-color: #667eea;
+            background-color: #f8f9ff;
+        }
+
+        .highlight-info {
+            background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+            font-size: 0.95rem;
+            color: #2d3436;
+        }
+
+        .submit-section {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 50px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .loading-spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .success-message {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .error-message {
+            display: none;
+            background: #f8d7da;
+            color: #721c24;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .survey-form {
+                padding: 25px;
+            }
+
+            .radio-group {
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>医療機関デジタル化現状調査</h1>
+            <p>貴院の現在の運営状況についてお聞かせください</p>
+        </div>
+
+        <form id="surveyForm" class="survey-form">
+            <!-- 質問1 -->
+            <div class="question-group">
+                <div class="question">
+                    <span class="question-number">1</span>
+                    1日あたりの電話対応（予約変更・初診案内など）はどのくらいありますか？
+                </div>
+                <div class="radio-group">
+                    <label class="radio-item">
+                        <input type="radio" name="phone_calls" value="10件未満">
+                        <span>10件未満</span>
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="phone_calls" value="10-30件">
+                        <span>10〜30件</span>
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="phone_calls" value="31-50件">
+                        <span>31〜50件</span>
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="phone_calls" value="51-100件">
+                        <span>51〜100件</span>
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="phone_calls" value="100件以上">
+                        <span>100件以上</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- 質問2 -->
+            <div class="question-group">
+                <div class="question">
+                    <span class="question-number">2</span>
+                    ホームページの更新はどのくらいの頻度で行っていますか？
+                </div>
+                <div class="radio-group">
+                    <label class="radio-item">
+                        <input type="radio" name="website_update" value="ほぼ毎日">
+                        <span>ほぼ毎日</span>
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="website_update" value="週に1-2回">
+                        <span>週に1〜2回</span>
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="website_update" value="月に1-2回">
+                        <span>月に1〜2回</span>
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="website_update" value="数ヶ月に1回">
+                        <span>数ヶ月に1回</span>
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="website_update" value="ほとんど更新しない">
+                        <span>ほとんど更新しない</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- 質問3 -->
+            <div class="question-group">
+                <div class="question">
+                    <span class="question-number">3</span>
+                    LINE公式アカウントは運用していますか？
+                </div>
+                <div class="radio-group">
+                    <label class="radio-item">
+                        <input type="radio" name="line_account" value="運用している">
+                        <span>運用している</span>
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="line_account" value="アカウントはあるが活用していない">
+                        <span>アカウントはあるが活用していない</span>
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="line_account" value="運用していない">
+                        <span>運用していない</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- 質問4 -->
+            <div class="question-group">
+                <div class="question">
+                    <span class="question-number">4</span>
+                    予約・キャンセル・初診案内など、LINEで自動化している業務はありますか？
+                </div>
+                <div class="radio-group">
+                    <label class="radio-item">
+                        <input type="radio" name="line_automation" value="予約・キャンセル・初診案内すべて自動化">
+                        <span>予約・キャンセル・初診案内すべて自動化</span>
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="line_automation" value="一部の業務を自動化">
+                        <span>一部の業務を自動化</span>
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="line_automation" value="自動化していない">
+                        <span>自動化していない</span>
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="line_automation" value="LINEを使用していない">
+                        <span>LINEを使用していない</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- 質問5 -->
+            <div class="question-group">
+                <div class="question">
+                    <span class="question-number">5</span>
+                    Googleマップは運用していますか？
+                </div>
+                <div class="radio-group">
+                    <label class="radio-item">
+                        <input type="radio" name="google_maps" value="積極的に運用・更新している">
+                        <span>積極的に運用・更新している</span>
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="google_maps" value="登録しているが更新していない">
+                        <span>登録しているが更新していない</span>
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="google_maps" value="運用していない">
+                        <span>運用していない</span>
+                    </label>
+                </div>
+                <div class="highlight-info">
+                    💡 MEO最適化で新患平均＋32% / ★4.5・レビュー50件越は来院率+28%
+                </div>
+            </div>
+
+            <!-- 質問6 -->
+            <div class="question-group">
+                <div class="question">
+                    <span class="question-number">6</span>
+                    いま最も強化したいものを1つ選ぶとしたら？
+                </div>
+                <div class="radio-group">
+                    <label class="radio-item">
+                        <input type="radio" name="priority" value="電話対応の効率化・自動化">
+                        <span>電話対応の効率化・自動化</span>
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="priority" value="ホームページの充実・更新">
+                        <span>ホームページの充実・更新</span>
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="priority" value="LINE公式アカウントの活用">
+                        <span>LINE公式アカウントの活用</span>
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="priority" value="Googleマップ・MEO対策">
+                        <span>Googleマップ・MEO対策</span>
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="priority" value="予約システムの導入・改善">
+                        <span>予約システムの導入・改善</span>
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="priority" value="患者とのコミュニケーション強化">
+                        <span>患者とのコミュニケーション強化</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="submit-section">
+                <button type="submit" class="submit-btn" id="submitBtn">アンケートを送信</button>
+            </div>
+
+            <div class="loading" id="loading">
+                <div class="loading-spinner"></div>
+                <p>送信中...</p>
+            </div>
+
+            <div class="success-message" id="successMessage">
+                <h3>✅ 送信完了</h3>
+                <p>アンケートへのご協力ありがとうございました。<br>貴院に最適なデジタル化提案をご用意いたします。</p>
+            </div>
+
+            <div class="error-message" id="errorMessage">
+                <h3>❌ 送信エラー</h3>
+                <p>申し訳ございません。送信に失敗しました。<br>しばらく時間をおいて再度お試しください。</p>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Google Apps Script Web App URL
+        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbw3Sjcw8fy4G0xF5wSiavNwAnNKehkAa9Q3F0N5cey5xIhez-2XZI8uCUle9ChFp0IbPQ/exec';
+
+        // ラジオボタンの選択状態を視覚的に表示
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                // 同じname属性のラジオボタンからselectedクラスを削除
+                document.querySelectorAll(`input[name="${this.name}"]`).forEach(r => {
+                    r.closest('.radio-item').classList.remove('selected');
+                });
+                // 選択されたラジオボタンにselectedクラスを追加
+                this.closest('.radio-item').classList.add('selected');
+            });
+        });
+
+        // フォーム送信処理
+        document.getElementById('surveyForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // すべての質問に回答されているかチェック
+            const questions = ['phone_calls', 'website_update', 'line_account', 'line_automation', 'google_maps', 'priority'];
+            const formData = new FormData(this);
+            
+            for (let question of questions) {
+                if (!formData.get(question)) {
+                    alert('すべての質問にお答えください。');
+                    return;
+                }
+            }
+
+            // UI要素の取得
+            const submitBtn = document.getElementById('submitBtn');
+            const loading = document.getElementById('loading');
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+
+            // ローディング状態に変更
+            submitBtn.disabled = true;
+            loading.style.display = 'block';
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+
+            // 送信データの準備
+            const surveyData = {
+                phone_calls: formData.get('phone_calls'),
+                website_update: formData.get('website_update'),
+                line_account: formData.get('line_account'),
+                line_automation: formData.get('line_automation'),
+                google_maps: formData.get('google_maps'),
+                priority: formData.get('priority'),
+                timestamp: new Date().toISOString()
+            };
+
+            try {
+                // Google Apps Scriptに送信
+                const response = await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(surveyData)
+                });
+
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    // 成功時の処理
+                    loading.style.display = 'none';
+                    successMessage.style.display = 'block';
+                    // フォームを非表示にする
+                    document.querySelector('.survey-form').style.display = 'none';
+                } else {
+                    throw new Error(result.message || '送信に失敗しました');
+                }
+            } catch (error) {
+                // エラー時の処理
+                console.error('送信エラー:', error);
+                loading.style.display = 'none';
+                errorMessage.style.display = 'block';
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
