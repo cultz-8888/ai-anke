@@ -188,12 +188,14 @@
 
         .success-message {
             display: none;
-            background: #d4edda;
+            background: white;
             color: #155724;
-            padding: 20px;
-            border-radius: 10px;
+            padding: 40px;
+            border-radius: 20px;
             text-align: center;
             margin-top: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border: 3px solid #d4edda;
         }
 
         .error-message {
@@ -277,28 +279,28 @@
             <div class="question-group">
                 <div class="question">
                     <span class="question-number">2</span>
-                    ホームページの更新はどのくらいの頻度で行っていますか？
+                    現在のホームページは集客に役立っていますか。
                 </div>
                 <div class="radio-group">
                     <label class="radio-item">
-                        <input type="radio" name="website_update" value="ほぼ毎日" required>
-                        <span>ほぼ毎日</span>
+                        <input type="radio" name="website_update" value="役立っていない" required>
+                        <span>役立っていない</span>
                     </label>
                     <label class="radio-item">
-                        <input type="radio" name="website_update" value="週に1〜2回" required>
-                        <span>週に1〜2回</span>
+                        <input type="radio" name="website_update" value="役立ってはいるがデザインや機能に問題がある" required>
+                        <span>役立ってはいるがデザインや機能に問題がある</span>
                     </label>
                     <label class="radio-item">
-                        <input type="radio" name="website_update" value="月に1〜2回" required>
-                        <span>月に1〜2回</span>
+                        <input type="radio" name="website_update" value="最低限の機能は果たしている" required>
+                        <span>最低限の機能は果たしている</span>
                     </label>
                     <label class="radio-item">
-                        <input type="radio" name="website_update" value="数ヶ月に1回" required>
-                        <span>数ヶ月に1回</span>
+                        <input type="radio" name="website_update" value="概ね満足している" required>
+                        <span>概ね満足している</span>
                     </label>
                     <label class="radio-item">
-                        <input type="radio" name="website_update" value="ほとんど更新しない" required>
-                        <span>ほとんど更新しない</span>
+                        <input type="radio" name="website_update" value="満足している" required>
+                        <span>満足している</span>
                     </label>
                 </div>
                 <div class="highlight-info">
@@ -442,16 +444,17 @@
                 <p>送信中...</p>
             </div>
 
-            <div class="success-message" id="successMessage">
-                <h3>✅ 送信完了</h3>
-                <p>ご回答ありがとうございました。一週間以内を目安に、ご記載のメールアドレスに診断結果を送信させていただきます。</p>
-            </div>
-
             <div class="error-message" id="errorMessage">
                 <h3>❌ 送信エラー</h3>
                 <p>申し訳ございません。送信に失敗しました。<br>しばらく時間をおいて再度お試しください。</p>
             </div>
         </form>
+
+        <!-- 成功メッセージをフォーム外に移動 -->
+        <div class="success-message" id="successMessage">
+            <h3>✅ 送信完了</h3>
+            <p>ご回答ありがとうございました。一週間以内を目安に、ご記載のメールアドレスに診断結果を送信させていただきます。</p>
+        </div>
     </div>
 
     <!-- 隠しiframe（フォーム送信先） -->
@@ -490,6 +493,8 @@
                 successMessage.style.display = 'block';
                 // フォームを非表示にする
                 document.querySelector('.survey-form').style.display = 'none';
+                // ページの一番上にスクロール
+                window.scrollTo(0, 0);
             }, 3000);
         });
 
