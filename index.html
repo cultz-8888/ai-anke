@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>医療機関のデジタル化現状調査アンケート</title>
+    <title>業務効率化現状調査アンケート</title>
     <style>
         * {
             margin: 0;
@@ -113,6 +113,21 @@
             background-color: #f8f9ff;
         }
 
+        .text-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #f0f0f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .text-input:focus {
+            outline: none;
+            border-color: #667eea;
+            background-color: #f8f9ff;
+        }
+
         .highlight-info {
             background: linear-gradient(135deg, #ffeaa7, #fab1a0);
             padding: 15px;
@@ -218,12 +233,12 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>医療機関デジタル化現状調査</h1>
+            <h1>業務効率化現状調査アンケート</h1>
             <p>貴院の現在の運営状況についてお聞かせください</p>
         </div>
 
-        <!-- Google Apps Scriptに送信するフォーム（新URL対応） -->
-        <form id="surveyForm" class="survey-form" action="https://script.google.com/macros/s/AKfycbwOrk3Jfzv04yxGD2l-tJ8DB3Qm4Gbp4Mvm6rQ2mwJBS0kO_KPih71dX5kza_R7pnYnWg/exec" method="POST" target="hiddenIframe">
+        <!-- Google Apps Scriptに送信するフォーム -->
+        <form id="surveyForm" class="survey-form" action="https://script.google.com/macros/s/AKfycbyTr14H6t8liAud9zf2aijBJ7wQaqpjP0LSSYi4YRa4XzPIc1OtIieCTtskwyTfCUs4Sg/exec" method="POST" target="hiddenIframe">
             
             <!-- 質問1 -->
             <div class="question-group">
@@ -233,25 +248,28 @@
                 </div>
                 <div class="radio-group">
                     <label class="radio-item">
-                        <input type="radio" name="phone_calls" value="10件未満" required>
-                        <span>10件未満</span>
+                        <input type="radio" name="phone_calls" value="5件未満" required>
+                        <span>5件未満</span>
                     </label>
                     <label class="radio-item">
-                        <input type="radio" name="phone_calls" value="10-30件" required>
-                        <span>10〜30件</span>
+                        <input type="radio" name="phone_calls" value="6〜10件" required>
+                        <span>6〜10件</span>
                     </label>
                     <label class="radio-item">
-                        <input type="radio" name="phone_calls" value="31-50件" required>
+                        <input type="radio" name="phone_calls" value="11〜30件" required>
+                        <span>11〜30件</span>
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="phone_calls" value="31〜50件" required>
                         <span>31〜50件</span>
                     </label>
                     <label class="radio-item">
-                        <input type="radio" name="phone_calls" value="51-100件" required>
-                        <span>51〜100件</span>
+                        <input type="radio" name="phone_calls" value="50件以上" required>
+                        <span>50件以上</span>
                     </label>
-                    <label class="radio-item">
-                        <input type="radio" name="phone_calls" value="100件以上" required>
-                        <span>100件以上</span>
-                    </label>
+                </div>
+                <div class="highlight-info">
+                    💡 <strong>AI電話自動応答で、電話業務80%以上削減 / 24時間予約対応で機会損失を防ぎ、月間新患数平均+15%</strong>
                 </div>
             </div>
 
@@ -267,11 +285,11 @@
                         <span>ほぼ毎日</span>
                     </label>
                     <label class="radio-item">
-                        <input type="radio" name="website_update" value="週に1-2回" required>
+                        <input type="radio" name="website_update" value="週に1〜2回" required>
                         <span>週に1〜2回</span>
                     </label>
                     <label class="radio-item">
-                        <input type="radio" name="website_update" value="月に1-2回" required>
+                        <input type="radio" name="website_update" value="月に1〜2回" required>
                         <span>月に1〜2回</span>
                     </label>
                     <label class="radio-item">
@@ -282,6 +300,9 @@
                         <input type="radio" name="website_update" value="ほとんど更新しない" required>
                         <span>ほとんど更新しない</span>
                     </label>
+                </div>
+                <div class="highlight-info">
+                    💡 <strong>ホームページのアップデートで検索からの流入数+30%</strong>
                 </div>
             </div>
 
@@ -305,13 +326,16 @@
                         <span>運用していない</span>
                     </label>
                 </div>
+                <div class="highlight-info">
+                    💡 <strong>AIチャットボット導入で、問い合わせ対応を24時間自動化 / 友だち登録者のブロック率-30%、リピート率+20%</strong>
+                </div>
             </div>
 
             <!-- 質問4 -->
             <div class="question-group">
                 <div class="question">
                     <span class="question-number">4</span>
-                    予約・キャンセル・初診案内など、LINEで自動化している業務はありますか？
+                    予約・キャンセル・初診案内など、自動化している業務はありますか？
                 </div>
                 <div class="radio-group">
                     <label class="radio-item">
@@ -326,10 +350,9 @@
                         <input type="radio" name="line_automation" value="自動化していない" required>
                         <span>自動化していない</span>
                     </label>
-                    <label class="radio-item">
-                        <input type="radio" name="line_automation" value="LINEを使用していない" required>
-                        <span>LINEを使用していない</span>
-                    </label>
+                </div>
+                <div class="highlight-info">
+                    💡 <strong>予約〜アフターフォローまでAIで完全自動化 / 無断キャンセル率-50%、患者満足度+25%</strong>
                 </div>
             </div>
 
@@ -354,7 +377,7 @@
                     </label>
                 </div>
                 <div class="highlight-info">
-                    💡 MEO最適化で新患平均＋32% / ★4.5・レビュー50件越は来院率+28%
+                    💡 <strong>MEO最適化で新患平均＋32% / ★4.5・レビュー50件越は来院率+28%</strong>
                 </div>
             </div>
 
@@ -367,29 +390,47 @@
                 <div class="radio-group">
                     <label class="radio-item">
                         <input type="radio" name="priority" value="電話対応の効率化・自動化" required>
-                        <span>電話対応の効率化・自動化</span>
+                        <span><strong>電話対応の効率化・自動化</strong></span>
                     </label>
                     <label class="radio-item">
                         <input type="radio" name="priority" value="ホームページの充実・更新" required>
-                        <span>ホームページの充実・更新</span>
+                        <span><strong>ホームページの充実・更新</strong></span>
                     </label>
                     <label class="radio-item">
                         <input type="radio" name="priority" value="LINE公式アカウントの活用" required>
-                        <span>LINE公式アカウントの活用</span>
+                        <span><strong>LINE公式アカウントの活用</strong></span>
                     </label>
                     <label class="radio-item">
                         <input type="radio" name="priority" value="Googleマップ・MEO対策" required>
-                        <span>Googleマップ・MEO対策</span>
+                        <span><strong>Googleマップ・MEO対策</strong></span>
                     </label>
                     <label class="radio-item">
                         <input type="radio" name="priority" value="予約システムの導入・改善" required>
-                        <span>予約システムの導入・改善</span>
+                        <span><strong>予約システムの導入・改善</strong></span>
                     </label>
                     <label class="radio-item">
                         <input type="radio" name="priority" value="患者とのコミュニケーション強化" required>
-                        <span>患者とのコミュニケーション強化</span>
+                        <span><strong>患者とのコミュニケーション強化</strong></span>
                     </label>
                 </div>
+            </div>
+
+            <!-- 質問7 -->
+            <div class="question-group">
+                <div class="question">
+                    <span class="question-number">7</span>
+                    貴院の医院名をご入力ください。
+                </div>
+                <input type="text" name="clinic_name" class="text-input" placeholder="例：〇〇クリニック" required>
+            </div>
+
+            <!-- 質問8 -->
+            <div class="question-group">
+                <div class="question">
+                    <span class="question-number">8</span>
+                    アンケート結果を受信するメールアドレスをご入力ください。
+                </div>
+                <input type="email" name="email" class="text-input" placeholder="例：clinic@example.com" required>
             </div>
 
             <div class="submit-section">
@@ -403,7 +444,7 @@
 
             <div class="success-message" id="successMessage">
                 <h3>✅ 送信完了</h3>
-                <p>アンケートへのご協力ありがとうございました。<br>貴院に最適なデジタル化提案をご用意いたします。</p>
+                <p>ご回答ありがとうございました。一週間以内を目安に、ご記載のメールアドレスに診断結果を送信させていただきます。</p>
             </div>
 
             <div class="error-message" id="errorMessage">
@@ -443,7 +484,7 @@
             successMessage.style.display = 'none';
             errorMessage.style.display = 'none';
 
-            // 3秒後に成功メッセージを表示（Google Apps Scriptの処理時間を考慮）
+            // 3秒後に成功メッセージを表示
             setTimeout(() => {
                 loading.style.display = 'none';
                 successMessage.style.display = 'block';
@@ -452,7 +493,7 @@
             }, 3000);
         });
 
-        // 隠しiframeのロード完了を監視（オプション）
+        // 隠しiframeのロード完了を監視
         document.getElementById('hiddenIframe').addEventListener('load', function() {
             console.log('フォーム送信が完了しました');
         });
